@@ -2,7 +2,7 @@ const express = require("express")
 
 const app = express()
 
-app.use(express.static ("public"))
+app.use(express.static ("public"))//serve static 
 
 app.get("/", (req,res)=>{
     res.render("index.ejs")
@@ -14,6 +14,14 @@ app.get("/about", (req,res)=>{
 
 app.get("/contact",(req,res)=>{
     res.render("contact.ejs")
+})
+
+app.get("/services",(req,res)=>{
+    res.render("services.ejs")
+})
+
+app.get("/booknow",(req,res)=>{
+    res.render("booknow.ejs")
 })
 
 //page not found
