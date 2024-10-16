@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="shortcut icon" href="images/lightlogo.png" type="image/x-icon">
 </head>
 <body>
     <%- include("_header.ejs") %>
@@ -35,6 +36,86 @@
             </div>
 
         </section>
+
+        <section class="packages" id="packages">
+            <h2>Our pacakages</h2>
+            <a href="/custompackage">Build Your Own Service package</a>
+            <div class="packages-container">
+                <div class="package">
+                    <p class="package-price">Kes 2500</p>
+                    <h3>basic</h3>
+                    <ul>
+                        <li>Oil Change</li>
+                        <li>Tire rotation</li>
+                        <li>Brake inspection</li>
+                    </ul>
+                </div>
+    
+                <div class="package">
+                    <p class="package-price">Kes 3500</p>
+                    <h3>standard</h3>
+                    <ul>
+                        <li>Full Engine diagnostic</li>
+                        <li>Break pad replacement</li>
+                        <li>general service(fluid, top-up, filter check)</li>
+                        <li>battery health check</li>
+                    </ul>
+                </div>
+    
+                <div class="package">
+                    <p class="package-price">Kes 5000</p>
+                    <h3>premium</h3>
+                    <ul>
+                        <li>Oil Change</li>
+                        <li>full engine diagnstic</li>
+                        <li>tire rotation and alignent</li>
+                        <li>general services</li>
+                    </ul>
+                </div>
+
+            </div>
+            
+
+
+        </section>
+
+        <section class="services" id="services">
+            <h2>Our Services</h2>
+            <a href="/diadnosis">request for custom vehicle diagnosis</a>
+            <div class="service-container">
+                <div class="service">
+                    <img src="images/3.png" alt="">
+                    <h3>Oil change</h3>
+                    <p>Regular oil changes are essential to maintaining the performance and longevity of your engine. Our experts use high-quality oil and filters to ensure your vehicle operates at its peak.</p>
+                </div>
+                <div class="service">
+                    <img src="images/4.png" alt="">
+                    <h3>Break pad replacement</h3>
+                    <p>  Worn-out brakes can jeopardize your safety. We inspect, repair, and replace brake pads, ensuring your braking system is in top condition.</p>
+                </div>
+                <div class="service">
+                    <img src="images/5.png" alt="">
+                    <h3>General service</h3>
+                    <p>Keep your car running smoothly with our comprehensive general servicing, including fluid checks, battery testing, air filter replacement, and more.</p>
+                </div>
+                <div class="service">
+                    <img src="images/6.png" alt="">
+                    <h3>tire replacement and alignment</h3>
+                    <p>Ensure even tire wear and a smoother ride with our tire rotation and alignment services.</p>
+                </div>
+                <div class="service">
+                    <img src="images/7.png" alt="">
+                    <h3>battery inspection and replacement</h3>
+                    <p> Don't let a dead battery leave you stranded. We provide battery checks, maintenance, and replacement services.</p>
+                </div>
+                <div class="service">
+                    <img src="images/8.png" alt="">
+                    <h3>engine diagnostic</h3>
+                    <p>  If your vehicle is experiencing issues, our advanced diagnostic tools can identify and fix the problem quickly.</p>
+                </div>
+            </div>
+        </section>
+        <section class="testimonials" id="testimonials"></section>
     </main>
     <%- include("_footer.ejs")%>
     
