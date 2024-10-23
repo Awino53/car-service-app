@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signin - Car Service App</title>
+    <link rel="stylesheet" href="main.css"/>
+    <link rel="stylesheet" href="sigin.css"/>
+    <link rel="shortcut icon" href="lightlogo.png" type="image/x-icon" />
+  </head>
+  <body>
+    <%- include("_header.ejs") %>
+    <main>
+      <h1>Access your account</h1>
+      <div class="tabs">
+        <button id="signin" class="tab-btn active">Sign In</button>
+        <button id="register" class="tab-btn">Register</button>
+      </div>
+      <div class="windows">
+        <form action="/signin" method="post" id="signin-window" class="active">
+          <div>
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required />
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required />
+          </div>
+          <div>
+            <label for="role">Role</label>
+            <select name="role" id="role">
+              <option value="client">Client</option>
+              <option value="mechanic">Mechanic</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div>
+            <input type="submit" value="Signin" />
+          </div>
+        </form>
+        <form action="/register" method="post" id="register-window">
+          <div>
+            <label for="id">ID Number</label>
+            <input type="number" name="id" id="id" required />
+          </div>
+          <div>
+            <label for="fullname">Full Name</label>
+            <input type="text" name="fullname" id="fullname" required />
+          </div>
+          <div>
+            <label for="phone">Phone Number</label>
+            <input
+              type="tel"
+              name="phone"
+              id="phone"
+              placeholder="0712345678"
+              required
+            />
+          </div>
+          <div>
+            <label for="role">Role</label>
+            <select name="role" id="role-register">
+              <option value="none">Select Role</option>
+              <option value="client">Client</option>
+              <option value="mechanic">Mechanic</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+
+          <!-- These fields are hidden by default and shown conditionally -->
+          <div id="email-field" style="display: none">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" />
+          </div>
+          <div id="address-field" style="display: none">
+            <label for="address">Home Address</label>
+            <input
+              type="text"
+              name="address"
+              id="address"
+              placeholder="123 Nandi County, Kenya"
+            />
+          </div>
+          <div id="specialty-field" style="display: none">
+            <label for="specialty">Specialty</label>
+            <input type="text" name="specialty" id="specialty" />
+          </div>
+
+          <div>
+            <input type="submit" value="Register" />
+          </div>
+        </form>
+      </div>
+    </main>
+    <%- include("_footer.ejs") %>
+    <script src="signin.js"></script>
+  </body>
+</html>
