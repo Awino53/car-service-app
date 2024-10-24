@@ -57,9 +57,59 @@ function handleRoleChange() {
     addressField.style.display = "block";
   } else if (selectedRole === "mechanic") {
     // Show specialty for mechanics
+    emailField.style.display = "block";
     specialtyField.style.display = "block";
   }
 }
 
 // Add event listener to role select element
 roleSelect.addEventListener("change", handleRoleChange);
+
+
+// Function to show the alert and auto-hide it after 10 seconds
+function showAlert() {
+  const alert = document.getElementById("alert");
+
+  // Make the alert visible
+  alert?.classList.remove("hide");
+
+  // Hide the alert after 10 seconds (10000 milliseconds)
+  setTimeout(() => {
+    alert?.classList.add("hide");
+  }, 6000);
+}
+
+// Call the function to display the alert (triggered when needed)
+showAlert();
+
+// Get the password, confirm password fields, and error message element
+const password = document.getElementById("password");
+const confirmPassword = document.getElementById("confirm");
+const passwordError = document.getElementById("password-error");
+
+// Add event listener to check password match on form submit
+document
+  .querySelector("#register-window")
+  .addEventListener("submit", function (e) {
+    if (password.value !== confirmPassword.value) {
+      // Prevent form submission if passwords don't match
+      e.preventDefault();
+      passwordError.textContent = "Passwords do not match";
+    } else {
+      // Clear error message if passwords match
+      passwordError.textContent = "";
+    }
+  });
+
+// Add event listeners to clear the error as the user types
+password.addEventListener("input", checkPasswordMatch);
+confirmPassword.addEventListener("input", checkPasswordMatch);
+
+
+function checkPasswordMatch() {
+  if (password.value === confirmPassword.value) {
+    // Clear the error message if passwords match
+    passwordError.textContent = "";
+  }
+}
+

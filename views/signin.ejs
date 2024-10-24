@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Signin - Car Service App</title>
-    <link rel="stylesheet" href="main.css"/>
-    <link rel="stylesheet" href="sigin.css"/>
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="sigin.css" />
     <link rel="shortcut icon" href="lightlogo.png" type="image/x-icon" />
   </head>
   <body>
@@ -20,12 +19,12 @@
       <div class="windows">
         <form action="/signin" method="post" id="signin-window" class="active">
           <div>
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" required />
+            <label for="loginemail">Email</label>
+            <input type="email" name="loginemail" id="loginemail" required />
           </div>
           <div>
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" required />
+            <label for="pass">Password</label>
+            <input type="password" name="pass" id="pass" required />
           </div>
           <div>
             <label for="role">Role</label>
@@ -64,7 +63,6 @@
               <option value="none">Select Role</option>
               <option value="client">Client</option>
               <option value="mechanic">Mechanic</option>
-              <option value="admin">Admin</option>
             </select>
           </div>
 
@@ -86,6 +84,16 @@
             <label for="specialty">Specialty</label>
             <input type="text" name="specialty" id="specialty" />
           </div>
+          <!-- passwords -->
+          <div>
+            <label for="password">Password </label>
+            <input type="password" name="password" id="password" required />
+          </div>
+          <div>
+            <label for="confirm">Confirm Password</label>
+            <input type="password" name="confirm" id="confirm" required />
+            <p id="password-error"></p>
+          </div>
 
           <div>
             <input type="submit" value="Register" />
@@ -93,6 +101,14 @@
         </form>
       </div>
     </main>
+    
+    <% if(locals.message){ %>
+      <p class="alertsuccess" id="alert" ><%= locals.message %></p>
+      <% } %>
+
+    <% if(locals.error){ %>
+    <p class="alertsuccess" id="alert" style="background-color: red;"><%= locals.error %></p>
+    <% } %>
     <%- include("_footer.ejs") %>
     <script src="signin.js"></script>
   </body>

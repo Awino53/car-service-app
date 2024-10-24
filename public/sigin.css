@@ -111,3 +111,26 @@ main {
   #specialty-field {
     display: none;
   }
+
+  .alertsuccess {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background-color: #4caf50; /* Success green */
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    z-index: 1000; /* Stay above other content */
+  }
+  
+  .alertsuccess.hide {
+    opacity: 0;
+    visibility: hidden;
+  }
+  
