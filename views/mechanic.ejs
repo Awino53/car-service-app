@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mechanics dashboard</title>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <style>
+        .booking{
+            position: relative;
+        }
+        .actions{
+            position: absolute;
+            bottom: 20px;
+            right: 40px;
+        }
+        .actions a{
+            padding: 8px;
+            background-color: orangered;
+            color: white;
+            font-weight: bold;
+            border-radius: 6px;
+        }
+        .actions .accept{
+            background-color: green;
+        }
+    </style>
+    <%- include("_header.ejs") %>
+
+    <h1>Hello <%= locals.user.full_name %></h1>
+    <% if (!locals.user.profilepic) {%>
+    <img src="images/avarter.png" width="200px"  alt="profile">
+    <% } else {%>
+      <img src="profilepics/<%= locals.user.profilepic %>" alt="">
+      <%}%>
+    <p>email: <%= locals.user.email %></p>
+    <section>
+      <h2>bookings history</h2>
+      <% if(bookings.length == 0) { %>
+      <hr />
+      <p style="color: red">No bookings found</p>
+      <% }else{ %> <% bookings.forEach(booking=>{ %>
+      <hr />
+      <div class="booking">
+        <h3>
+          <%= booking.day.toLocaleDateString() %> in the <%=
+          booking.scheduled_time %>
+        </h3>
+        <p>description: <%= booking.description %></p>
+        <p>services: <%= booking.services %></p>
+
+        <% if(booking.bookingstatus == "ACCEPTED"){  %>
+        <p style="color: green">status: <%= booking.bookingstatus %></p>
+        <%} else if(booking.bookingstatus == "DECLINED"){ %>
+        <p style="color: rgb(225, 26, 26)">status: <%= booking.bookingstatus %></p>
+        <% }else{%>
+            <p style="color: rgb(44, 15, 208)">status: <%= booking.bookingstatus %></p>
+            <% } %>
+
+        <% let bookingClient = locals.clients.find
+        (client=>client.id_number==booking.client_id)%>
+        <h4>client</h4>
+        <p>name: <%= bookingClient.full_name %></p>
+        <p>phone: <%= bookingClient.phone %></p>
+        <p>email: <%= bookingClient.email %></p>
+        <div class="actions">
+          <a class="accept" href="/accept?booking=<%= booking.booking_id %>">accept booking</a>
+          <a class="decline" href="/decline?booking=<%= booking.booking_id%>"
+            >decline booking</a
+          >
+        </div>
+      </div>
+      <% })%> <%}%>
+    </section>
+  </body>
+</html>

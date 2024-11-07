@@ -18,6 +18,9 @@
       </div>
       <div class="windows">
         <form action="/signin" method="post" id="signin-window" class="active">
+          <% if(locals.loginError) { %> 
+            <p style="color: red;"><%= locals.loginError %></p>
+            <% } %>
           <div>
             <label for="loginemail">Email</label>
             <input type="email" name="loginemail" id="loginemail" required />
@@ -38,7 +41,7 @@
             <input type="submit" value="Signin" />
           </div>
         </form>
-        <form action="/register" method="post" id="register-window">
+        <form action="/register" method="post" enctype="multipart/form-data" id="register-window">
           <div>
             <label for="id">ID Number</label>
             <input type="number" name="id" id="id" required />
@@ -78,11 +81,17 @@
               name="address"
               id="address"
               placeholder="123 Nandi County, Kenya"
+              
             />
           </div>
           <div id="specialty-field" style="display: none">
             <label for="specialty">Specialty</label>
             <input type="text" name="specialty" id="specialty" />
+          </div>
+
+          <div id="profile-field" style="display: none">
+            <label for="profile">upload profile picture</label>
+            <input type="file" name="profile" id="profile"  /> <!-- multiple if you nee multiple pictures -->
           </div>
           <!-- passwords -->
           <div>
