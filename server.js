@@ -1,9 +1,8 @@
 const express = require("express");
-const multer = require("multer")
-const upload = multer ({dest:"public/profilepics"});
+const multer = require("multer");
+const upload = multer({ dest: "public/profilepics" });
 //const upload = multer({dest: "public/profilepics"});
 //const uploadsMechs= multer({dest: public/profilepics});
-
 
 const session = require("express-session");
 
@@ -22,7 +21,7 @@ app.use((req, res, next) => {
   res.locals.isLoggedIn = req.session.isLoggedIn;
   if (
     !req.session.isLoggedIn &&
-    ["/account", "/booknow", "/book","/accept","/cancel"].includes(req.path)
+    ["/account", "/booknow", "/book", "/accept", "/cancel"].includes(req.path)
   ) {
     res.render("401.ejs");
   } else {
@@ -81,8 +80,8 @@ app.get("/account", (req, res) => {
           dbconn.query("SELECT * FROM clients", (error3, clients) => {
             if (error1 || error2 || error3)
               return res.status(500).render("500.ejs");
-            console.log(bookings);//[]--
-            
+            console.log(bookings); //[]--
+
             return res.render("mechanic.ejs", { bookings, services, clients });
           });
         });
@@ -181,29 +180,37 @@ app.post("/signin", express.urlencoded({ extended: true }), (req, res) => {
     });
   }
 });
-app.post("/register", express.urlencoded({ extended: true }),upload.single("profile"), (req, res) => {
-  // actions -- input validation(package), save data in db(insert into clients/mechanics)
-  const { id, fullname, password, email, phone, role, specialty, address } =
-    req.body; // desctructuring
-
-  const hashedPassword = bcrypt.hashSync(password, salt);
+app.post(
+  "/register",
+  express.urlencoded({ extended: true }),
+  upload.single("profile"),
+  (req, res) => {
+    // actions -- input validation(package), save data in db(insert into clients/mechanics)
+    const { id, fullname, password, email, phone, role, specialty, address } =
+      req.body; // desctructuring
+    //hash the password
+    const hashedPassword = bcrypt.hashSync(password, salt);
+     // Set profilepic to null if no file is uploaded
+  const profilePic = req.file ? req.file.filename : null;
 
   let sql = "";
-  if (role == "mechanic") {
-    sql = `INSERT INTO mechanics(id_number, full_name,phone,specialty,email,password,profilepic) VALUES(${id}, "${fullname}", "${phone}", "${specialty}", "${email}", "${hashedPassword}", "${req.file.filename}")`;
-  } else if (role == "client") {
-    sql = `INSERT INTO clients(id_number, full_name,phone,address,email,password) VALUES(${id}, "${fullname}", "${phone}", "${address}", "${email}", "${hashedPassword}")`;
-  } else {
-    return res.redirect("/signin?error=role");
-  }
-  dbconn.query(sql, (error) => {
-    if (error) {
-      res.render("500.ejs");
+  if (role === "mechanic") {
+    sql = `INSERT INTO mechanics(id_number, full_name, phone, specialty, email, password, profilepic) 
+           VALUES(${id}, "${fullname}", "${phone}", "${specialty}", "${email}", "${hashedPassword}", ${profilePic ? `"${profilePic}"` : "NULL"})`;
+    } else if (role == "client") {
+      sql = `INSERT INTO clients(id_number, full_name,phone,address,email,password) VALUES(${id}, "${fullname}", "${phone}", "${address}", "${email}", "${hashedPassword}")`;
     } else {
-      res.redirect("/signin?message=registered");
+      return res.redirect("/signin?error=role");
     }
-  });
-});
+    dbconn.query(sql, (error) => {
+      if (error) {
+        res.render("500.ejs");
+      } else {
+        res.redirect("/signin?message=registered");
+      }
+    });
+  }
+);
 
 app.get("/days", (req, res) => {
   res.render("days.ejs", {
@@ -263,37 +270,31 @@ app.post("/book", express.urlencoded({ extended: true }), (req, res) => {
 });
 
 //accept bookings and decline bookings
-app.get("/accept",(req,res)=>{
-  let bookingId = req.query.booking || ""
-  let sql = `UPDATE bookings SET bookingstatus="ACCEPTED" WHERE booking_id = ${bookingId}`
-  dbconn.query(sql,(error)=>{
-    if (!error){
-      res.redirect("/account?message=succesfully accepted booking")
-    }else{
+app.get("/accept", (req, res) => {
+  let bookingId = req.query.booking || "";
+  let sql = `UPDATE bookings SET bookingstatus="ACCEPTED" WHERE booking_id = ${bookingId}`;
+  dbconn.query(sql, (error) => {
+    if (!error) {
+      res.redirect("/account?message=succesfully accepted booking");
+    } else {
       console.log(error);
-      res.status(500).render("500.ejs")
-      
+      res.status(500).render("500.ejs");
     }
-  })
-  
-})
-app.get("/decline",(req,res)=>{
-  let bookingId = req.query.booking || ""
-  let sql= `UPDATE bookings SET bookingstatus="DECLINED" WHERE booking_id = ${bookingId}`
-  dbconn.query(sql,(error)=>{
-    if (!error){
-      res.redirect("/account?messages=succesfully declined booking")
-    }else{
-      console.log(error);
-      res.status(500).render("500.ejs")
-      
-    }
-  })
-  
+  });
 });
- 
- 
- 
+app.get("/decline", (req, res) => {
+  let bookingId = req.query.booking || "";
+  let sql = `UPDATE bookings SET bookingstatus="DECLINED" WHERE booking_id = ${bookingId}`;
+  dbconn.query(sql, (error) => {
+    if (!error) {
+      res.redirect("/account?messages=succesfully declined booking");
+    } else {
+      console.log(error);
+      res.status(500).render("500.ejs");
+    }
+  });
+});
+
 //logout
 app.get("/logout", (req, res) => {
   req.session.destroy((err) => {
